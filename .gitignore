@@ -71,3 +71,8 @@ Thumbs.db
 # Local files
 archive/
 .codex
+.claude/settings*
+
+# scratch files
+notes/
+research/
