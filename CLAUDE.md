@@ -7,15 +7,47 @@ Always do the right thing, not the easy thing.
 
 ## Project
 
-<!-- TODO: Describe your project here. -->
+Aphelion is a brand graph database -- a system for modeling brands, their attributes, relationships, and the networks they form. The domain centers on graph operations: nodes (brands, entities), edges (relationships, associations), traversals, and queries.
 
 ## Build
 
-<!-- TODO: Document build commands when tech stack is chosen. -->
+> **Tech stack not yet chosen.** Update this section once the stack is selected.
+> At minimum, define: rapid dev loop, test, lint/format, full check, and run commands.
 
 ## Ground Control
 
-The Ground Control project identifier for this repo is `<!-- TODO: set your GC project identifier -->`.
+The Ground Control project identifier for this repo is `aphelion`.
+
+## Coding Standards
+
+See [docs/CODING_STANDARDS.md](docs/CODING_STANDARDS.md) for the full reference. Key points:
+
+- **L0 is the default assurance level.** Ship features, not ceremony. One test per significant behavior.
+- **L1** for state transitions, security boundaries, and silent-corruption-risk methods.
+- **L2** for state machines and graph operations (cycle detection, traversal, reachability).
+- Domain logic is framework-independent. Dependency flows inward: `api/ -> domain/ <- infrastructure/`.
+- All exceptions extend a single base exception type. No framework exceptions from domain code.
+- Imperative commit messages. Every commit updates CHANGELOG.md.
+
+## Architecture Decisions
+
+This project has 15 accepted ADRs in Ground Control (project: `aphelion`). Use `gc_list_adrs` to view them. Local copies are in `docs/adrs/`.
+
+Key constraints enforced by hooks and CI:
+- Only the Kuzu fork is the engine kernel (ADR-001). No other graph engines.
+- The maintained Kuzu fork lives in the `KeplerOps` GitHub organization (ADR-001).
+- Kernel types stay behind `infrastructure/engine/` (ADR-002, 007).
+- V1 is single-node only (ADR-003, 005, 009). No distributed code.
+- openCypher is the query language baseline (ADR-004). Extensions must be marked.
+- New dependencies require an entry in `docs/approved-extensions.yaml` (ADR-006).
+- No public wire protocol commitment yet (ADR-008).
+- Compatibility surface changes require `docs/compatibility-versions.yaml` update (ADR-010).
+- Product server/control layers use Java 21 while the kernel stays native (ADR-011).
+- The engine runs as a co-located out-of-process node behind a product-owned contract (ADR-012, 014).
+- Product and engine split catalog authority by metadata class (ADR-013).
+- Compatibility and correctness claims require layered executable verification (ADR-015).
+
+See [docs/adr-enforcement.md](docs/adr-enforcement.md) for the full enforcement system reference.
 
 ## Code Review
 
