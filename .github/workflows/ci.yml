@@ -19,10 +19,39 @@ permissions:
 
 jobs:
   # ---------------------------------------------------------------------------
+  # ADR Conformance — architecture decision enforcement
+  # ---------------------------------------------------------------------------
+  adr-conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Validate ADR manifest files exist
+        run: |
+          test -f docs/approved-extensions.yaml || { echo "FAIL: docs/approved-extensions.yaml missing (ADR-006)"; exit 1; }
+          test -f docs/compatibility-versions.yaml || { echo "FAIL: docs/compatibility-versions.yaml missing (ADR-010)"; exit 1; }
+          test -f docs/language-deviations.yaml || { echo "FAIL: docs/language-deviations.yaml missing (ADR-004)"; exit 1; }
+
+      - name: Validate YAML syntax
+        run: |
+          python3 -c "import yaml; yaml.safe_load(open('docs/approved-extensions.yaml'))"
+          python3 -c "import yaml; yaml.safe_load(open('docs/compatibility-versions.yaml'))"
+          python3 -c "import yaml; yaml.safe_load(open('docs/language-deviations.yaml'))"
+
+      - name: Run ADR conformance checks
+        run: |
+          if [ -d src/ ]; then
+            scripts/check-adr-conformance.sh
+          else
+            echo "No src/ directory yet — skipping source file checks"
+          fi
+
+  # ---------------------------------------------------------------------------
   # Lint — fast checks
   # ---------------------------------------------------------------------------
   lint:
     runs-on: ubuntu-latest
+    needs: [adr-conformance]
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Check files

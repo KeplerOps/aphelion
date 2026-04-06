@@ -1,0 +1,31 @@
+# Approved Extensions and Engine-Adjacent Dependencies
+# ADR-006: All extensions must pass security, operational, and license review.
+#
+# Add new entries here BEFORE adding the dependency to the project.
+# The stop hook and CI will block if dependency files change without
+# a corresponding update to this file.
+#
+# See docs/adr-enforcement.md for the full enforcement system reference.
+
+schema_version: 1
+
+# Each entry must include:
+#   name: Package/extension name
+#   version: Approved version or version constraint
+#   license: SPDX license identifier
+#   approved_date: ISO-8601 date of approval
+#   approved_by: Reviewer name or handle
+#   purpose: Why this dependency is needed
+#   security_review: ISO-8601 date of security review, or "pending"
+#   notes: Any constraints on usage (optional)
+
+extensions: []
+  # Example:
+  # - name: example-extension
+  #   version: "1.0.0"
+  #   license: MIT
+  #   approved_date: "2026-04-05"
+  #   approved_by: maintainer-handle
+  #   purpose: Provides X capability for Y feature
+  #   security_review: "2026-04-05"
+  #   notes: Only approved for use in infrastructure layer

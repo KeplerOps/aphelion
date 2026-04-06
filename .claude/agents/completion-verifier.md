@@ -24,6 +24,16 @@ If source files were changed:
 
 If only GC MCP operations were performed (creating requirements, relations, traceability links, etc.) with no source code changes, CHANGELOG is not required.
 
+## 2.5 ADR boundary check
+
+If source files were changed, perform these informational checks (flag but don't hard-fail):
+
+- Check if any files under `src/api/` or `src/domain/` appear to import from kernel/engine paths (e.g., `kuzu::`, `from kuzu import`). If found, flag: "Possible kernel boundary violation (ADR-002) — domain/API code should not import kernel types directly."
+- Check if any dependency files (`Cargo.toml`, `package.json`, `pyproject.toml`, `go.mod`, `requirements*.txt`) were changed without `docs/approved-extensions.yaml` appearing in the diff. If found, flag: "Dependency changed without approved-extensions.yaml update (ADR-006)."
+- Check if files in compatibility-surface paths (`src/*/query/`, `src/*/parser/`, `src/*/storage/`, `src/*/backup/`, `src/*/extension/`) were changed without `docs/compatibility-versions.yaml` appearing in the diff. If found, flag: "Compatibility surface changed without version registry update (ADR-010)."
+
+These are informational warnings to supplement the hard checks in hooks and CI. Include them in your verdict if found.
+
 ## 3. Traceability link check
 
 Look at the git log and branch name to determine if a requirement is being implemented (branch names typically contain issue numbers, and the conversation would reference requirement UIDs).
