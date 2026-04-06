@@ -50,6 +50,26 @@ If your agent does not support MCP, you can still follow this workflow manually 
 - Never include AI attribution (Co-Authored-By, "Generated with Claude Code", etc.) in commits or PRs.
 - Never merge PRs — the maintainer reviews and merges.
 
+## Architecture Decision Conformance
+
+This project enforces 10 ADRs through automated controls. See [docs/adr-enforcement.md](docs/adr-enforcement.md) for the full reference.
+
+**Automated enforcement layers:**
+- **Claude Code hooks** block edits that violate kernel boundaries, import banned engines, or add distributed primitives.
+- **Pre-commit hooks** scan staged files for ADR violations at commit time.
+- **CI** validates ADR conformance on every PR.
+- **Stop hooks** verify manifest updates when dependencies or compatibility surfaces change.
+- **Manifest files** (`docs/approved-extensions.yaml`, `docs/compatibility-versions.yaml`, `docs/language-deviations.yaml`) track auditable decisions.
+
+**If your agent does not support Claude Code hooks**, enforce these rules manually:
+1. Never import graph engines other than the Kuzu fork.
+2. Keep kernel types behind `infrastructure/engine/`. Domain and API layers use product-defined interfaces only.
+3. No distributed systems code in v1.
+4. New dependencies must be added to `docs/approved-extensions.yaml` first.
+5. Query language extensions must be explicitly marked and recorded in `docs/language-deviations.yaml`.
+
+**Override mechanism:** Add `# adr-override: ADR-NNN` with a rationale comment to bypass a specific check. Overrides are for deliberate, documented deviations — not convenience.
+
 ## Repository Structure
 
 ```

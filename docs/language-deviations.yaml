@@ -1,0 +1,32 @@
+# openCypher Language Deviations
+# ADR-004: Extensions must be explicitly marked. No silent redefinition of
+# existing openCypher semantics.
+#
+# Record every deviation from the openCypher specification here BEFORE
+# implementing it. Each deviation must also be marked in the code
+# (annotation, naming convention, or comment).
+#
+# See docs/adr-enforcement.md for the full enforcement system reference.
+
+schema_version: 1
+
+baseline_spec: "openCypher"
+
+# Each entry must include:
+#   id: Unique identifier (DEV-NNN)
+#   type: extension | restriction | redefinition
+#   description: What differs from openCypher
+#   rationale: Why the deviation is necessary
+#   affected_syntax: Grammar rule or function name affected
+#   marked_in_code: Must be true per ADR-004
+#   introduced: Version when the deviation was introduced
+
+deviations: []
+  # Example:
+  # - id: DEV-001
+  #   type: extension
+  #   description: "BRAND_DISTANCE() function for computing brand graph proximity"
+  #   rationale: "Domain-specific function not in openCypher spec"
+  #   affected_syntax: "function invocation"
+  #   marked_in_code: true
+  #   introduced: "0.2.0"

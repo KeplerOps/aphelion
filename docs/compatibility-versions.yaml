@@ -1,0 +1,32 @@
+# Compatibility Surface Versions
+# ADR-010: Each surface is versioned independently from the first external release.
+#
+# Update this file when ANY of these surfaces change. The stop hook and CI
+# will verify this file is updated alongside compatibility-surface changes.
+#
+# See docs/adr-enforcement.md for the full enforcement system reference.
+
+schema_version: 1
+
+surfaces:
+  query_language:
+    version: "0.1.0"
+    baseline: "openCypher (ADR-004)"
+    last_changed: "2026-04-05"
+    notes: "Pre-alpha, not yet externally released"
+
+  storage_format:
+    version: "0.1.0"
+    baseline: "Kuzu fork local storage (ADR-005)"
+    last_changed: "2026-04-05"
+    notes: "Pre-alpha, not yet externally released"
+
+  backup_export_format:
+    version: "0.1.0"
+    last_changed: "2026-04-05"
+    notes: "Not yet implemented"
+
+  extension_api:
+    version: "0.1.0"
+    last_changed: "2026-04-05"
+    notes: "Not yet implemented"

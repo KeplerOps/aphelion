@@ -1,0 +1,74 @@
+# Architecture Test: openCypher Extensions Marked (ADR-004)
+#
+# Rule: All non-standard query functions and syntax extensions must carry
+#        an explicit extension marker (annotation, naming convention, or
+#        comment) and be recorded in docs/language-deviations.yaml.
+#
+# Rationale: ADR-004 requires that product-specific extensions are explicitly
+#            marked and must not silently redefine existing openCypher semantics.
+#
+# See: docs/adr-enforcement.md, docs/adrs/ADR-004.md
+
+# Pseudocode — convert to chosen framework when tech stack is selected.
+
+import yaml
+
+# Load the openCypher standard function list (this would come from the TCK
+# or a maintained reference file)
+OPENCYPHER_STANDARD_FUNCTIONS = load_standard_functions("docs/opencypher-functions.yaml")
+
+def test_all_extensions_are_marked():
+    """
+    Scan all function/procedure registrations in the query engine and verify
+    that any function NOT in the openCypher standard set has an extension marker.
+    """
+    registered_functions = find_registered_query_functions("src/")
+    for func in registered_functions:
+        if func.name not in OPENCYPHER_STANDARD_FUNCTIONS:
+            assert func.has_extension_marker(), (
+                f"Query function '{func.name}' is not in the openCypher standard "
+                f"and lacks an extension marker. Non-standard functions must be "
+                f"explicitly marked per ADR-004."
+            )
+
+def test_extensions_recorded_in_deviations_registry():
+    """
+    Verify that every marked extension function has a corresponding entry
+    in docs/language-deviations.yaml.
+    """
+    with open("docs/language-deviations.yaml") as f:
+        deviations = yaml.safe_load(f)
+
+    deviation_names = set()
+    if deviations.get("deviations"):
+        for dev in deviations["deviations"]:
+            deviation_names.add(dev.get("affected_syntax", "").lower())
+
+    registered_functions = find_registered_query_functions("src/")
+    for func in registered_functions:
+        if func.has_extension_marker():
+            assert func.name.lower() in deviation_names, (
+                f"Extension function '{func.name}' is marked in code but not "
+                f"recorded in docs/language-deviations.yaml. All deviations "
+                f"must be documented. (ADR-004)"
+            )
+
+def test_standard_functions_not_redefined():
+    """
+    Verify that functions matching openCypher standard names have compatible
+    signatures (parameter count, types) and semantics.
+    """
+    registered_functions = find_registered_query_functions("src/")
+    for func in registered_functions:
+        if func.name in OPENCYPHER_STANDARD_FUNCTIONS:
+            standard = OPENCYPHER_STANDARD_FUNCTIONS[func.name]
+            assert func.param_count == standard.param_count, (
+                f"Function '{func.name}' has {func.param_count} parameters but "
+                f"the openCypher standard defines {standard.param_count}. "
+                f"Do not silently redefine standard semantics. (ADR-004)"
+            )
+            assert not func.has_extension_marker(), (
+                f"Function '{func.name}' matches an openCypher standard function "
+                f"but is marked as an extension. If the behavior differs, document "
+                f"it as a 'redefinition' in language-deviations.yaml. (ADR-004)"
+            )

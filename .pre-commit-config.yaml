@@ -28,3 +28,17 @@ repos:
     rev: v8.24.0
     hooks:
       - id: gitleaks
+
+  # =============================================================================
+  # STAGE 3: ADR Conformance
+  # =============================================================================
+
+  # Architecture decision enforcement (ADR-001, 003, 005, 006, 008, 009)
+  - repo: local
+    hooks:
+      - id: adr-conformance
+        name: ADR conformance checks
+        entry: scripts/check-adr-conformance.sh
+        language: script
+        pass_filenames: false
+        stages: [pre-commit]
