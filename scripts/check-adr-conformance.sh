@@ -45,7 +45,7 @@ for file in $FILES; do
   if [ -n "$MATCHES" ]; then
     echo "FAIL (ADR-001): Banned graph engine reference in $file:"
     echo "$MATCHES"
-    echo "  ADR-001 selected the Kuzu fork as the only permitted engine."
+    echo "  ADR-001 selected capcom as the product-owned engine kernel."
     echo ""
     ERRORS=$((ERRORS + 1))
   fi

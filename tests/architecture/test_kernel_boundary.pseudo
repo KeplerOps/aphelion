@@ -1,7 +1,7 @@
 # Architecture Test: Kernel Boundary (ADR-002)
 #
 # Rule: Modules in src/domain/ and src/api/ must not import from
-#        src/infrastructure/engine/ (the Kuzu kernel adapter layer).
+#        src/infrastructure/engine/ (the engine adapter layer).
 #
 # Rationale: ADR-002 requires the product architecture to own system boundaries.
 #            The kernel is an internal subsystem. Domain and API layers interact

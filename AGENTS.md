@@ -2,6 +2,13 @@
 
 This file provides context for AI coding agents (Claude Code, Codex, Copilot, etc.) working in this repository.
 
+## Ground Control Context
+
+```yaml
+ground_control:
+  project: aphelion
+```
+
 ## Ground Control
 
 This project uses **Ground Control** for requirements management and traceability. Ground Control is a requirements engineering platform that stores requirements, relations (parent/child, dependencies), traceability links (code ↔ requirements), ADRs, and project status.
@@ -28,7 +35,7 @@ Ground Control is available as an MCP (Model Context Protocol) server configured
 | `gc_create_github_issue` | Create a GitHub issue from a requirement |
 | `gc_list_adrs` | List architecture decision records |
 
-The Ground Control project identifier for this repo is set in `CLAUDE.md`. Use it in the `project` parameter for all GC tool calls.
+The Ground Control project identifier for this repo is `aphelion`, declared in the Ground Control Context block above. Use it in the `project` parameter for all GC tool calls.
 
 ### Workflow
 
@@ -52,7 +59,7 @@ If your agent does not support MCP, you can still follow this workflow manually 
 
 ## Architecture Decision Conformance
 
-This project enforces 10 ADRs through automated controls. See [docs/adr-enforcement.md](docs/adr-enforcement.md) for the full reference.
+This project enforces the accepted ADR set through automated controls and review gates. See [docs/adr-enforcement.md](docs/adr-enforcement.md) for the full reference.
 
 **Automated enforcement layers:**
 - **Claude Code hooks** block edits that violate kernel boundaries, import banned engines, or add distributed primitives.
@@ -62,7 +69,7 @@ This project enforces 10 ADRs through automated controls. See [docs/adr-enforcem
 - **Manifest files** (`docs/approved-extensions.yaml`, `docs/compatibility-versions.yaml`, `docs/language-deviations.yaml`) track auditable decisions.
 
 **If your agent does not support Claude Code hooks**, enforce these rules manually:
-1. Never import graph engines other than the Kuzu fork.
+1. Treat `capcom` as the engine kernel. Temporary reference-engine work, including Kuzu, must stay behind `infrastructure/engine/` and must not define product contracts.
 2. Keep kernel types behind `infrastructure/engine/`. Domain and API layers use product-defined interfaces only.
 3. No distributed systems code in v1.
 4. New dependencies must be added to `docs/approved-extensions.yaml` first.

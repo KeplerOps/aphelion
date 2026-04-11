@@ -17,9 +17,9 @@ surfaces:
 
   storage_format:
     version: "0.1.0"
-    baseline: "Kuzu fork local storage (ADR-005)"
-    last_changed: "2026-04-05"
-    notes: "Pre-alpha, not yet externally released"
+    baseline: "capcom local storage (ADR-005)"
+    last_changed: "2026-04-06"
+    notes: "Pre-alpha target, not yet externally released"
 
   backup_export_format:
     version: "0.1.0"

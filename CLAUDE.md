@@ -31,11 +31,11 @@ See [docs/CODING_STANDARDS.md](docs/CODING_STANDARDS.md) for the full reference.
 
 ## Architecture Decisions
 
-This project has 15 accepted ADRs in Ground Control (project: `aphelion`). Use `gc_list_adrs` to view them. Local copies are in `docs/adrs/`.
+This project has 16 accepted ADRs in Ground Control (project: `aphelion`). Use `gc_list_adrs` to view them. Local copies are in `docs/adrs/`.
 
 Key constraints enforced by hooks and CI:
-- Only the Kuzu fork is the engine kernel (ADR-001). No other graph engines.
-- The maintained Kuzu fork lives in the `KeplerOps` GitHub organization (ADR-001).
+- `capcom` is the engine kernel (ADR-001). Temporary reference engines must not define the product contract.
+- The canonical kernel source lives in the `capcom` repo (ADR-001).
 - Kernel types stay behind `infrastructure/engine/` (ADR-002, 007).
 - V1 is single-node only (ADR-003, 005, 009). No distributed code.
 - openCypher is the query language baseline (ADR-004). Extensions must be marked.

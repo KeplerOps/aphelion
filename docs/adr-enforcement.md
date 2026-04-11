@@ -4,7 +4,7 @@ This document is the authoritative reference for how Aphelion's Architecture Dec
 
 ## Overview
 
-Aphelion has 15 accepted ADRs that define the product's architectural boundaries. These are mastered in Ground Control (project: `aphelion`) with local copies in `docs/adrs/`.
+Aphelion has 16 accepted ADRs that define the product's architectural boundaries. These are mastered in Ground Control (project: `aphelion`) with local copies in `docs/adrs/`.
 
 ADRs are enforced through layered controls so that the path of least resistance for a coding agent or developer is to follow the architectural decisions. Controls are organized by enforcement strength:
 
@@ -31,14 +31,14 @@ This layered approach means a violation must bypass multiple independent checks 
 
 ## Per-ADR Enforcement Detail
 
-### ADR-001: Kuzu Fork as Engine Kernel
+### ADR-001: capcom as Product-Owned Engine Kernel
 
-**What it decides**: The only permitted engine kernel is a Kuzu fork. MillenniumDB, Graphflow, and greenfield implementations are rejected.
+**What it decides**: `capcom` is the product-owned engine kernel. MillenniumDB and Graphflow are rejected as product kernels. Kuzu may be used only as a temporary reference engine or stand-in behind the product-owned boundary.
 
 **What violation looks like**:
 - Importing or depending on `millenniumdb` or `graphflow` in any source file
 - Adding a dependency on an alternative graph engine
-- Building a custom graph engine from scratch (new storage layer, new query processor) rather than using the Kuzu fork
+- Letting a temporary reference engine become the product contract or long-term kernel source of truth
 
 **How it's enforced**:
 - **Edit/Write time**: `adr-boundary-check.sh` blocks content containing `millenniumdb` or `graphflow`
@@ -54,10 +54,10 @@ This layered approach means a violation must bypass multiple independent checks 
 
 ### ADR-002: Product Architecture Owns Boundaries
 
-**What it decides**: The product architecture owns system boundaries. The Kuzu kernel is an internal subsystem behind product-defined interfaces.
+**What it decides**: The product architecture owns system boundaries. The kernel is an internal subsystem behind product-defined interfaces.
 
 **What violation looks like**:
-- Importing Kuzu types (`kuzu::`, `from kuzu import`) in `src/domain/` or `src/api/`
+- Importing kernel types (`capcom::`, `kuzu::`, `from capcom import`, `from kuzu import`) in `src/domain/` or `src/api/`
 - Exposing kernel transaction objects or engine handles in public APIs
 - Letting security, audit, or metadata logic live in the kernel layer
 

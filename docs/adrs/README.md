@@ -23,7 +23,7 @@ Do not edit these files by hand. Ground Control is the source of truth.
 
 | ADR | Title | Status |
 |-----|-------|--------|
-| [ADR-001](ADR-001.md) | Bootstrap on a Kuzu Fork as the Initial Engine Kernel | Accepted |
+| [ADR-001](ADR-001.md) | Build capcom as the Product-Owned Engine Kernel | Accepted |
 | [ADR-002](ADR-002.md) | Keep the Product Architecture Separate from the Engine Kernel | Accepted |
 | [ADR-003](ADR-003.md) | Deliver a Strong Single-Node Product Before Distributed HA | Accepted |
 | [ADR-004](ADR-004.md) | Use openCypher as the Initial Language Compatibility Baseline | Accepted |
@@ -38,3 +38,4 @@ Do not edit these files by hand. Ground Control is the source of truth.
 | [ADR-013](ADR-013.md) | Split Catalog and Metadata Authority Between the Product and the Engine | Accepted |
 | [ADR-014](ADR-014.md) | Use a Capability-Oriented Internal Engine-Node Contract | Accepted |
 | [ADR-015](ADR-015.md) | Use Layered Conformance and Verification Harnesses | Accepted |
+| [ADR-016](ADR-016.md) | Allocate Aphelion Requirement Ownership Across Kernel, Boundary, and Product Layers | Accepted |

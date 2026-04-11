@@ -1,18 +1,19 @@
 ## ADR Conformance Rules
 
-This project has 15 accepted Architecture Decision Records enforced through a mix of automated controls and explicit review gates.
+This project has 16 accepted Architecture Decision Records enforced through a mix of automated controls and explicit review gates.
 See `docs/adr-enforcement.md` for the full reference. Violations trigger hard blocks from
 hooks, pre-commit, and CI. These rules are the first line of defense — follow them and the
 automated checks will pass.
 
 ### Engine and Kernel Boundary (ADR-001, ADR-002, ADR-007)
 
-- The engine kernel is a **Kuzu fork**. It is the only graph engine permitted in this project.
+- The engine kernel is **capcom**. It is the only product kernel permitted in this project.
+- Kuzu may appear only as a temporary reference engine or stand-in behind `src/infrastructure/engine/`. It must not define the product contract or leak above the engine boundary.
 - **Never** import, depend on, or reference MillenniumDB, Graphflow, Neo4j (GPL components),
   or any other graph database engine. ADR-001 evaluated and rejected these alternatives.
-- Kuzu kernel types belong **exclusively** in `src/infrastructure/engine/` (or the equivalent
+- Kernel engine types belong **exclusively** in `src/infrastructure/engine/` (or the equivalent
   adapter layer). Code in `src/domain/` and `src/api/` must never import from the kernel
-  directly — no `kuzu::`, `from kuzu import`, `require('kuzu')`, or equivalent.
+  directly — no `capcom::`, `kuzu::`, `from capcom import`, `from kuzu import`, or equivalent.
 - The product is exposed as a **server process** (ADR-007), not as the raw embedded kernel API.
   Authentication, authorization, auditing, and observability attach at the server/product layer.
   Never expose kernel transaction objects, engine handles, or internal storage types in

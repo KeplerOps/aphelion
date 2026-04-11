@@ -52,7 +52,7 @@ has_override() {
 if echo "$CONTENT" | grep -qiE '\b(millenniumdb|graphflow)\b'; then
   if ! has_override "ADR-001"; then
     echo "BLOCKED (ADR-001): Reference to a banned graph engine detected." >&2
-    echo "ADR-001 selected the Kuzu fork as the only permitted engine kernel." >&2
+    echo "ADR-001 selected capcom as the product-owned engine kernel." >&2
     echo "MillenniumDB (GPL, not production-ready) and Graphflow (research artifact) were rejected." >&2
     echo "To override, add: # adr-override: ADR-001 — <rationale>" >&2
     exit 2
@@ -65,10 +65,10 @@ fi
 # Only applies to files in domain/ or api/ layers
 case "$FILE_PATH" in
   */src/domain/*|*/src/api/*)
-    if echo "$CONTENT" | grep -qiE '(kuzu::|from\s+kuzu\s+import|require\s*\(\s*['\''"]kuzu|import\s+kuzu|use\s+kuzu::)'; then
+    if echo "$CONTENT" | grep -qiE '(capcom::|kuzu::|from\s+(capcom|kuzu)\s+import|require\s*\(\s*['\''"](capcom|kuzu)|import\s+(capcom|kuzu)|use\s+(capcom|kuzu)::)'; then
       if ! has_override "ADR-002"; then
         echo "BLOCKED (ADR-002/ADR-007): Direct kernel import in domain or API layer." >&2
-        echo "Kuzu kernel types must only be imported in src/infrastructure/engine/." >&2
+        echo "Kernel engine types must only be imported in src/infrastructure/engine/." >&2
         echo "Domain and API code must use product-defined interfaces, not kernel types directly." >&2
         echo "To override, add: # adr-override: ADR-002 — <rationale>" >&2
         exit 2
