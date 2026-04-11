@@ -55,8 +55,8 @@ fi
 # CHECK 3: Kernel boundary cross-layer warning (ADR-002)
 # If both API/domain and engine layers changed, flag for review.
 # ---------------------------------------------------------------------------
-HAS_API_DOMAIN=$(echo "$CHANGED" | grep -cE 'src/(api|domain)/' || true)
-HAS_ENGINE=$(echo "$CHANGED" | grep -cE 'src/infrastructure/engine/' || true)
+HAS_API_DOMAIN=$(echo "$CHANGED" | grep -cE '(api|domain)/' || true)
+HAS_ENGINE=$(echo "$CHANGED" | grep -cE 'infrastructure/engine/' || true)
 
 if [ "$HAS_API_DOMAIN" -gt 0 ] && [ "$HAS_ENGINE" -gt 0 ]; then
   REASONS="${REASONS}Both API/domain and engine layers changed in this session — verify kernel boundary is maintained (ADR-002). Kernel types must not leak into domain or API layers. "

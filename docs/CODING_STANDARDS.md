@@ -39,7 +39,7 @@ At beta, the default rises to L1. Every L1+ public method gets explicit contract
 
 ## Architecture Rules
 
-> **Update this section with enforcement tooling once the tech stack is chosen.**
+Enforced by ArchUnit tests in `src/test/java/com/keplerops/aphelion/architecture/` and shell hooks in `.claude/hooks/` and `scripts/`.
 
 ### General principles
 
@@ -75,19 +75,18 @@ Add an automated architecture test whenever you:
 
 ## Package / Module Structure
 
-> **Update with concrete paths once the tech stack is chosen.**
-
-Follow this general pattern:
+Root package: `com.keplerops.aphelion`
 
 ```
-src/
-├── domain/           # Business logic. No framework imports.
-│   ├── model/        # Entities, value objects, aggregates
-│   ├── service/      # Domain services (write-owners of entities)
-│   └── repository/   # Repository interfaces (not implementations)
-├── api/              # Controllers / route handlers. Thin delegation to services.
-├── infrastructure/   # External adapters (graph DB driver, external APIs)
-└── shared/           # Cross-cutting concerns (logging, utilities)
+src/main/java/com/keplerops/aphelion/
+├── domain/                    # Business logic. No framework imports.
+│   ├── model/                 # Entities, value objects, aggregates
+│   ├── service/               # Domain services (write-owners of entities)
+│   └── repository/            # Repository interfaces (not implementations)
+├── api/                       # Server endpoints. Thin delegation to services.
+├── infrastructure/
+│   └── engine/                # Kernel adapter layer (only place kernel types appear)
+└── shared/                    # Cross-cutting concerns (logging, utilities)
 ```
 
 **Placement rules:**
@@ -128,13 +127,11 @@ All error responses use this format. Do not invent new formats.
 
 ### Test organization
 
-> **Update concrete paths once the tech stack is chosen.**
-
 ```
-tests/
+src/test/java/com/keplerops/aphelion/
+├── architecture/     # ArchUnit rules enforcing ADR boundaries. Fast. Run always.
 ├── unit/             # No DB, no external services. Fast. Run always.
-├── integration/      # Real database via containers. Slow. Run in CI.
-└── architecture/     # Automated architecture rule enforcement. Fast. Run always.
+└── integration/      # Real database via Testcontainers. Slow. Run in CI.
 ```
 
 ### Test requirements by assurance level (pre-alpha)
@@ -173,7 +170,9 @@ Use the structured logging library appropriate to the chosen stack. Never use pr
 
 ## Code Style
 
-> **Update with specific formatter/linter configuration once the tech stack is chosen.**
+- **Formatter**: Spotless with Google Java Format (`./gradlew spotlessApply`)
+- **Static analysis**: SpotBugs (`./gradlew spotbugsMain`)
+- **Compile-time checks**: Error Prone (runs automatically during `./gradlew compileJava`)
 
 ### General principles
 

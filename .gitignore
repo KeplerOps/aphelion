@@ -52,6 +52,10 @@ dist/
 .DS_Store
 Thumbs.db
 
+# Gradle
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
 # IDE
 .vscode
 .idea/

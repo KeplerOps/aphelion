@@ -11,8 +11,14 @@ Aphelion is a brand graph database -- a system for modeling brands, their attrib
 
 ## Build
 
-> **Tech stack not yet chosen.** Update this section once the stack is selected.
-> At minimum, define: rapid dev loop, test, lint/format, full check, and run commands.
+Requires Java 21 (temurin recommended) and Gradle 8.12+ (wrapper included).
+
+- **Rapid dev loop**: `./gradlew classes` (compile only, includes Error Prone)
+- **Test**: `./gradlew test`
+- **Lint/format check**: `./gradlew spotlessCheck`
+- **Format fix**: `./gradlew spotlessApply`
+- **Static analysis**: `./gradlew spotbugsMain`
+- **Full check**: `./gradlew build` (compile + Error Prone + tests + Spotless + SpotBugs)
 
 ## Ground Control
 

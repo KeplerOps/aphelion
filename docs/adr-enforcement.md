@@ -28,6 +28,10 @@ This layered approach means a violation must bypass multiple independent checks 
 | Extensions registry | `docs/approved-extensions.yaml` | Manifest | Manual | Audit trail | 006 |
 | Compatibility versions | `docs/compatibility-versions.yaml` | Manifest | Manual | Audit trail | 010 |
 | Language deviations | `docs/language-deviations.yaml` | Manifest | Manual | Audit trail | 004 |
+| ArchUnit: kernel boundary | `src/test/.../architecture/KernelBoundaryTest.java` | ArchUnit test | `./gradlew test` | Hard block | 002, 007 |
+| ArchUnit: no distributed code | `src/test/.../architecture/NoDistributedCodeTest.java` | ArchUnit test | `./gradlew test` | Hard block | 003, 005, 009 |
+| ArchUnit: server layer required | `src/test/.../architecture/ServerLayerRequiredTest.java` | ArchUnit test | `./gradlew test` | Hard block | 007 |
+| ArchUnit: extensions marked | `src/test/.../architecture/OpenCypherExtensionsMarkedTest.java` | ArchUnit test | `./gradlew test` | Hard block | 004, 008 |
 
 ## Per-ADR Enforcement Detail
 
