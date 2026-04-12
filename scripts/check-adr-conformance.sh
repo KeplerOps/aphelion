@@ -111,7 +111,7 @@ PROTOCOL_PATTERN="\\b(${PROTOCOL_PATTERN})\\b"
 DOMAIN_FILES=""
 for file in $FILES; do
   case "$file" in
-    */src/domain/*|src/domain/*)
+    */domain/*|domain/*)
       DOMAIN_FILES="$DOMAIN_FILES $file"
       ;;
   esac

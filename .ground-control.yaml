@@ -1,0 +1,10 @@
+schema_version: 1
+project: aphelion
+github_repo: KeplerOps/aphelion
+workflow:
+  test_command: ./gradlew test
+  completion_command: ./gradlew build
+  lint_command: ./gradlew spotlessCheck
+  format_command: ./gradlew spotlessApply
+rules:
+  plan_rules: .gc/plan-rules.md

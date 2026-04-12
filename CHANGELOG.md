@@ -5,6 +5,52 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-04-11
+
+### Added
+
+- `.ground-control.yaml` at repo root declaring the Ground Control
+  project identifier, workflow commands, and plan rules reference.
+- `.gc/plan-rules.md` containing the ADR conformance checks previously
+  in `implement/SKILL.md` Step 4.25, rewritten as "plans MUST..." bullets.
+
+### Changed
+
+- `AGENTS.md` Ground Control Context block replaced with a pointer to
+  `.ground-control.yaml`.
+- `.mcp.json` `GH_REPO` placeholder replaced with `KeplerOps/aphelion`.
+
+## [0.2.0] - 2026-04-11
+
+### Added
+
+- Gradle 8.12 build system with Java 21 toolchain (`build.gradle.kts`, `settings.gradle.kts`)
+- JUnit 5, Testcontainers, jqwik, ArchUnit test dependencies
+- Spotless code formatting with Google Java Format
+- Error Prone compile-time checks
+- SpotBugs static analysis
+- Source layout: `com.keplerops.aphelion.{domain,api,infrastructure.engine}` packages
+- ArchUnit architecture tests replacing `.pseudo` specs:
+  - `KernelBoundaryTest` (ADR-002, ADR-007)
+  - `NoDistributedCodeTest` (ADR-003, ADR-005, ADR-009)
+  - `ServerLayerRequiredTest` (ADR-007)
+  - `OpenCypherExtensionsMarkedTest` (ADR-004, ADR-008)
+- CI lint job: Spotless format check and SpotBugs analysis
+- CI test job: full Gradle build including ArchUnit tests
+- V1 work order with sequenced checklists for capcom and aphelion repos (`notes/work-order.md`)
+
+### Changed
+
+- ADR enforcement scripts updated for Gradle Java source layout (path patterns broadened)
+- `docs/approved-extensions.yaml` populated with ADR-011 baseline toolchain
+- `CLAUDE.md` build section updated with Gradle commands
+- `docs/CODING_STANDARDS.md` filled in tech-stack-dependent sections
+- `docs/adr-enforcement.md` control inventory includes ArchUnit tests
+
+### Removed
+
+- Architecture test `.pseudo` spec files (replaced by real ArchUnit tests)
+
 ## [0.1.1] - 2026-04-06
 
 ### Added

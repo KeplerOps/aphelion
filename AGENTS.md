@@ -4,10 +4,11 @@ This file provides context for AI coding agents (Claude Code, Codex, Copilot, et
 
 ## Ground Control Context
 
-```yaml
-ground_control:
-  project: aphelion
-```
+This repo's Ground Control project id, workflow commands, and plan
+rules live in `.ground-control.yaml` at repo root (with larger rule
+files under `.gc/`). Agents read it via the
+`gc_get_repo_ground_control_context` MCP tool, which returns the full
+workflow config in a single call.
 
 ## Ground Control
 

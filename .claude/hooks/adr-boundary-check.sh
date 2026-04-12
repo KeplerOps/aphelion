@@ -64,7 +64,7 @@ fi
 # ---------------------------------------------------------------------------
 # Only applies to files in domain/ or api/ layers
 case "$FILE_PATH" in
-  */src/domain/*|*/src/api/*)
+  */domain/*|*/api/*)
     if echo "$CONTENT" | grep -qiE '(capcom::|kuzu::|from\s+(capcom|kuzu)\s+import|require\s*\(\s*['\''"](capcom|kuzu)|import\s+(capcom|kuzu)|use\s+(capcom|kuzu)::)'; then
       if ! has_override "ADR-002"; then
         echo "BLOCKED (ADR-002/ADR-007): Direct kernel import in domain or API layer." >&2
@@ -103,7 +103,7 @@ fi
 # CHECK 4: Protocol-specific imports in domain layer (ADR-008)
 # ---------------------------------------------------------------------------
 case "$FILE_PATH" in
-  */src/domain/*)
+  */domain/*)
     PROTOCOL_PATTERN='\b(bolt_protocol|postgres_wire|pgwire|grpc\.service|grpc_service|tonic::service|BoltConnection|PgWireHandler)\b'
     if echo "$CONTENT" | grep -qiE "$PROTOCOL_PATTERN"; then
       if ! has_override "ADR-008"; then
