@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-04-11
+
+### Added
+
+- `.ground-control.yaml` at repo root declaring the Ground Control
+  project identifier, workflow commands, and plan rules reference.
+- `.gc/plan-rules.md` containing the ADR conformance checks previously
+  in `implement/SKILL.md` Step 4.25, rewritten as "plans MUST..." bullets.
+
+### Changed
+
+- `AGENTS.md` Ground Control Context block replaced with a pointer to
+  `.ground-control.yaml`.
+- `.mcp.json` `GH_REPO` placeholder replaced with `KeplerOps/aphelion`.
+
 ## [0.2.0] - 2026-04-11
 
 ### Added
