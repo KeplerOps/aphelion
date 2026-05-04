@@ -2,9 +2,36 @@ schema_version: 1
 project: aphelion
 github_repo: KeplerOps/aphelion
 workflow:
+  base_branch: dev
   test_command: ./gradlew test
   completion_command: ./gradlew build
   lint_command: ./gradlew spotlessCheck
   format_command: ./gradlew spotlessApply
 rules:
   plan_rules: .gc/plan-rules.md
+docs:
+  adr_dir: docs/adrs/
+  # TODO: no architecture overview document exists yet; populate when authored
+  # architecture_overview: docs/architecture/ARCHITECTURE.md
+  coding_standards: docs/CODING_STANDARDS.md
+  # TODO: no dedicated workflow reference document yet; the workflow section
+  # currently lives inside docs/CODING_STANDARDS.md ("Development Workflow")
+  # workflow_reference: docs/DEVELOPMENT_WORKFLOW.md
+  # TODO: no knowledge base directory yet; create docs/knowledge/ if/when
+  # cross-cutting reference material is added
+  # knowledge_base: docs/knowledge/
+example_paths:
+  source: src/main/java/com/keplerops/aphelion/
+  test: src/test/java/com/keplerops/aphelion/
+requirements:
+  uid_examples:
+    - APH-DM-001
+    - APH-DM-002
+    - APH-QL-025
+cross_cutting_concerns:
+  description: |
+    Logging: structured logging with semantic event names (e.g. `brand_node_created`); never log secrets, tokens, or PII; bind request IDs at the middleware layer
+    Errors: all application exceptions extend a single base type; domain layer throws domain exceptions only (never HTTP/framework exceptions); a single global exception handler maps domain exceptions to the API error envelope `{ "error": { "code", "message", "detail" } }`
+    Architecture boundaries: enforced via ArchUnit tests under src/test/java/.../architecture/; product code must not depend on infrastructure/engine/* types — see docs/adrs/ and docs/adr-enforcement.md
+    Tests: ArchUnit architecture tests run always; unit/integration tests follow the assurance-level rules in docs/CODING_STANDARDS.md
+    # TODO: validation conventions are not yet codified in docs/CODING_STANDARDS.md; document and reflect here once defined
